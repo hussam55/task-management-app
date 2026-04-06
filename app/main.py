@@ -1,7 +1,9 @@
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app import routes
+from app import models
+from app.auth import get_current_user
 from app.routers import auth_endpoints, projects, tasks, workspaces
 
 app = FastAPI(
@@ -36,5 +38,11 @@ def root():
 def health():
     """Health check endpoint"""
     return {"status": "healthy"}
+
+
+@app.get("/users/me")
+def get_me(current_user: models.User = Depends(get_current_user)):
+    """Compatibility endpoint for current user info."""
+    return current_user
 
 

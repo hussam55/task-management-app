@@ -229,6 +229,8 @@ def delete_project(db: Session, project_id: int):
 
 def create_task(db: Session, project_id: int, task: schemas.TaskCreate, creator: models.User) -> models.Task:
     """Create a new task in a project"""
+    if task.assigned_to is not None and not get_user_by_id(db, task.assigned_to):
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User you are assigning to not found")
     
     db_task = models.Task(
         project_id=project_id,
@@ -240,10 +242,7 @@ def create_task(db: Session, project_id: int, task: schemas.TaskCreate, creator:
         created_by=creator.id,
         assigned_to=task.assigned_to
     )
-    
-    if not get_user_by_id(db , task.assigned_to):
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User you are assigning to not found")
-    
+
     db.add(db_task)
     db.commit()
     db.refresh(db_task)
