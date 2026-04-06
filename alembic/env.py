@@ -19,7 +19,9 @@ from app import models  # Import models to register them with Base
 config = context.config
 
 # Override sqlalchemy.url with environment variable if present
-database_url = os.getenv("DATABASE_URL", "postgresql://<user>:<password>@<host>:5432/<db_name>")
+database_url = os.getenv("DATABASE_URL")
+if not database_url:
+    raise RuntimeError("Missing required environment variable: DATABASE_URL")
 config.set_main_option("sqlalchemy.url", database_url)
 
 # Interpret the config file for Python logging.

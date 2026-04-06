@@ -10,8 +10,15 @@ import os
 from app.db import get_db
 from app import models, schemas
 
+def _require_env(name: str) -> str:
+    value = os.getenv(name)
+    if not value:
+        raise RuntimeError(f"Missing required environment variable: {name}")
+    return value
+
+
 # Configuration
-SECRET_KEY = os.getenv("SECRET_KEY", "REDACTED_JWT_SECRET")
+SECRET_KEY = _require_env("SECRET_KEY")
 ALGORITHM = os.getenv("ALGORITHM", "HS256")
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "60"))
 
