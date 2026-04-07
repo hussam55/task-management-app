@@ -1,6 +1,6 @@
 # Task Management API
 
-A minimal but clean task management API built with FastAPI, PostgreSQL, SQLAlchemy, and JWT authentication. This is a simplified Trello-like system with workspaces, projects, and tasks.
+A minimal and clean task management API built with FastAPI, PostgreSQL, SQLAlchemy, and JWT authentication. This is a simplified Trello-like system with workspaces, projects, and tasks.
 
 ## Features
 
