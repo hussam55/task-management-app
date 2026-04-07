@@ -8,7 +8,7 @@ from app.routers import auth_endpoints, projects, tasks, workspaces
 
 app = FastAPI(
     title="Task Management API",
-    description="A minimal but clean task management API built with FastAPI",
+    description="Task management API built with FastAPI",
     version="1.0.0"
 )
 
