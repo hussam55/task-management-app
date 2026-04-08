@@ -31,14 +31,21 @@ Task management API built with FastAPI, PostgreSQL, SQLAlchemy, and JWT authenti
 app/
   main.py           # FastAPI application
   db.py             # Database engine and session
+  settings.py       # Application settings loaded from environment
   models.py         # SQLAlchemy models
   schemas.py        # Pydantic schemas
   auth.py           # JWT and password handling
   crud.py           # Database operations
-  routes.py         # API endpoints
+  routers/
+    __init__.py     # Router package marker
+    auth_endpoints.py # Authentication endpoints
+    projects.py     # Project endpoints
+    tasks.py        # Task endpoints
+    workspaces.py   # Workspace endpoints
 tests/
   test_auth.py      # Authentication tests
   test_permissions.py # Authorization tests
+  conftest.py       # Shared test fixtures
 alembic/
   versions/         # Migration files
   env.py            # Alembic environment
@@ -110,12 +117,13 @@ README.md
 
 3. **Configure environment**
    
-   Copy `.env.example` to `.env` and update:
+  Copy [.env.example](.env.example) to `.env` and update:
    ```bash
    DATABASE_URL=postgresql://user:password@localhost:5432/taskdb
    SECRET_KEY=your-secret-key-min-32-chars-change-in-production
    ALGORITHM=HS256
    ACCESS_TOKEN_EXPIRE_MINUTES=60
+  CORS_ALLOW_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
    ```
 
 4. **Create database**
@@ -193,6 +201,8 @@ Save the access token for subsequent requests.
 curl -X GET "http://localhost:8000/users/me" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
+
+The canonical auth-protected endpoint is also available at `/auth/users/me`.
 
 ### 4. Create Workspace
 
