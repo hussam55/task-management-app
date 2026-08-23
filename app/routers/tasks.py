@@ -1,14 +1,15 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from typing import Optional
 
 from app import models, schemas, crud
 from app.db import get_db
-from app.auth import get_current_user, verify_password, create_access_token
+from app.auth import get_current_user
 
 router = APIRouter(
+    prefix="/tasks",
     tags=["tasks"]
+    
 )
 
 
@@ -50,7 +51,7 @@ def list_tasks(
     )
 
 
-@router.patch("/tasks/{task_id}", response_model=schemas.TaskResponse)
+@router.patch("/{task_id}", response_model=schemas.TaskResponse)
 def update_task(
     task_id: int,
     task_update: schemas.TaskUpdate,
@@ -63,7 +64,7 @@ def update_task(
     return crud.update_task(db, task_id, task_update)
 
 
-@router.delete("/tasks/{task_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/{task_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_task(
     task_id: int,
     current_user: models.User = Depends(get_current_user),
