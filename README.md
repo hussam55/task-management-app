@@ -66,7 +66,8 @@ README.md
 
 1. **Clone the repository**
    ```bash
-   cd c:\Projects\app
+   git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY
+   cd path/to/YOUR-FOLDER
    ```
 
 2. **Start the services**
