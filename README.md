@@ -25,6 +25,32 @@ Task management API built with FastAPI, PostgreSQL, SQLAlchemy, and JWT authenti
 - **passlib[bcrypt]** - Password hashing
 - **Docker & Docker Compose** - Containerization
 
+## Workspace, Project, and Task Flow
+
+```mermaid
+flowchart TD
+    User[Authenticated user] --> Workspace
+
+    Workspace --> CreateWS[Create workspace]
+    CreateWS --> Owner[Create owner membership]
+
+    Workspace --> Members[Manage members]
+    Members --> OwnerCheck[Require workspace owner]
+
+    Workspace --> Projects[Projects]
+    Projects --> MemberCheck1[Require workspace member]
+
+    Projects --> Tasks[Tasks]
+    Tasks --> MemberCheck2[Require workspace member]
+
+    MemberCheck1 --> ProjectCRUD[Create/list/update projects]
+    OwnerCheck --> DeleteProject[Delete project]
+    MemberCheck2 --> TaskCRUD[Create/list/update tasks]
+    OwnerCheck --> DeleteWorkspace[Delete workspace]
+    TaskCRUD --> CreatorCheck[Task creator or workspace owner]
+    CreatorCheck --> DeleteTask[Delete task]
+```
+
 ## Project Structure
 
 ```
